@@ -21,8 +21,8 @@
 
     - name: install nodejs
       apt: 
-        name: "{{ item }}"
-      with_items:
-        - nodejs
-        - npm
-        - pm2
+        name: ['nodejs', 'npm']
+
+    - name: install pm2 via npm
+      npm:
+        name: pm2
