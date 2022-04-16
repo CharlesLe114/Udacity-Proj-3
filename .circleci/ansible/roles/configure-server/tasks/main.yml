@@ -20,4 +20,9 @@
     #         update_cache: yes
 
     - name: install nodejs
-      apt: name=nodejs
+      apt: 
+        name: "{{ item }}"
+      with_items:
+        - nodejs
+        - npm
+        - pm2
