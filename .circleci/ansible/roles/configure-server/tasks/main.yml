@@ -26,3 +26,4 @@
     - name: install pm2 via npm
       npm:
         name: pm2
+        global: yes
