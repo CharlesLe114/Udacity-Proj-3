@@ -1,0 +1,17 @@
+---
+- name: install python3
+  apt:
+    name: python3
+    state: present
+
+- name: Update all packages to their latest version
+  apt:
+    name: "*"
+    state: latest
+
+- name: install nodejs, npm, and pm2
+  apt:
+    pkg:
+      - nodejs
+      - npm
+      - pm2
