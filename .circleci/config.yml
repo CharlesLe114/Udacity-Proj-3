@@ -382,10 +382,10 @@ jobs:
               # echo $i
               if [[ $i =~ ${OldWorkflowID} ]]
               then
-                # aws cloudformation delete-stack --stack-name $i
-                echo true
+                echo '------------------DELETE CONFIRMED----------------'
+                aws cloudformation delete-stack --stack-name $i
               else
-                echo false
+                echo '------------------DELETE DECLINED----------------'
               fi
             done
             
