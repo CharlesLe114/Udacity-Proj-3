@@ -376,7 +376,9 @@ jobs:
           name: Remove old stacks and files
           command: |
             for i in "${STACKS}"
+            do
               echo $i
+            done
             
 
 workflows:
