@@ -9,6 +9,9 @@
     name: "*"
     state: latest
 
+- name: add apt key for nodesource
+  apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+
 - name: install nodejs and npm via apt
   apt: 
     name: ['nodejs', 'npm']
