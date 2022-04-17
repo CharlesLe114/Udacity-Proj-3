@@ -365,18 +365,18 @@ jobs:
             # Fetch the Old workflow ID
             export OldWorkflowID=$(aws cloudformation \
                     list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-                    --no-paginate --output text)
+                    --no-paginate --output text) >> $BASH_ENV
             echo OldWorkflowID: "${OldWorkflowID}"
             echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
             # Fetch the stack names          
             export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
-                    --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
+                    --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) >> $BASH_ENV
             echo Stack names: "${STACKS[@]}"  
       - run:
           name: Remove old stacks and files
           command: |
-            echo OldWorkflowID: "${OldWorkflowID}"
-            echo "${STACKS[@]}"
+            echo OldWorkflowID: ${OldWorkflowID}
+            echo ${STACKS[@]}
             # for i in "${STACKS[@]}"
             # do
             #   echo $i
