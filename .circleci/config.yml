@@ -243,7 +243,7 @@ jobs:
             apk add ansible
             apk add tar 
             apk add gzip
-            apk add aws-cli
+            # apk add aws-cli
 
       - run:
           name: Configure server
