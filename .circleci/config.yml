@@ -380,9 +380,12 @@ jobs:
             for i in "${STACKS[@]}"
             do
               # echo $i
-              if [[ ${OldWorkflowID} =~ $i  ]]
+              if [[ $i =~ ${OldWorkflowID} ]]
               then
-                aws cloudformation delete-stack --stack-name $i
+                # aws cloudformation delete-stack --stack-name $i
+                echo true
+              else
+                echo false
               fi
             done
             
