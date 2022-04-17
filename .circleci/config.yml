@@ -377,7 +377,7 @@ jobs:
           command: |
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
-              aws cloudformation delete-stack --stack-name ${STACKS[@]}
+              aws cloudformation delete-stack --stack-name "${STACKS[@]}"
             fi
             
 
