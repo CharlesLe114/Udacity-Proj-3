@@ -375,11 +375,12 @@ jobs:
       - run:
           name: Remove old stacks and files
           command: |
+            echo OldWorkflowID: "${OldWorkflowID}"
             echo "${STACKS[@]}"
-            for i in "${STACKS[@]}"
-            do
-              echo $i
-            done
+            # for i in "${STACKS[@]}"
+            # do
+            #   echo $i
+            # done
             
 
 workflows:
