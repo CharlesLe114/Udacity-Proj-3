@@ -38,4 +38,6 @@ Resources:
 Outputs:
   WorkflowID:
     Description: Workflow ID used for cloudformation deployment
-    Value: ${ID}
+    Value: !Sub ${ID}
+    Export:
+      Name: WorkflowID
