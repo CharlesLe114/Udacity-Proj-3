@@ -375,10 +375,8 @@ jobs:
       - run:
           name: Remove old stacks and files
           command: |
-            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
-            then
-              aws cloudformation delete-stack --stack-name "${STACKS[@]}"
-            fi
+            for i in "${STACKS}"
+              echo $i
             
 
 workflows:
