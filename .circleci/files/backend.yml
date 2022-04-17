@@ -35,3 +35,7 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub backend-${ID}
+Outputs:
+  WorkflowID:
+    Description: Workflow ID used for cloudformation deployment
+    Value: ${ID}
