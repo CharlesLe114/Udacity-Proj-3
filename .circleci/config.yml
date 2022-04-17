@@ -375,6 +375,7 @@ jobs:
       - run:
           name: Remove old stacks and files
           command: |
+            echo "${STACKS[@]}"
             for i in "${STACKS[@]}"
             do
               echo $i
