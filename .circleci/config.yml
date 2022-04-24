@@ -266,7 +266,7 @@ jobs:
             ls -a
             echo "cd to backend"
             cd backend
-            # npm cache clean --force
+            ls -a
             echo "run install"
             npm install
             # Run and save the migration output
