@@ -21,7 +21,8 @@
 
 - name: install nodejs and npm via apt
   apt: 
-    name: ['nodejs', 'npm']
+    # name: ['nodejs', 'npm']
+    name: 'nodejs'
 
 - name: install pm2 via npm
   npm:
