@@ -258,8 +258,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-      - attach_workspace:
-          at: ~/
+      - restore_cache:
+          keys: [backend-build]
       - run:
           name: Run migrations
           command: |
