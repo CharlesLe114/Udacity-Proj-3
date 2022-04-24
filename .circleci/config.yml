@@ -152,15 +152,11 @@ jobs:
       # Docker image here that supports AWS CLI
       - image: amazon/aws-cli:2.5.2
     steps:
-      # Checkout code from git
-      - run:
-          name: install git
-          command: apk add --update openssh-client git
-      - checkout
       - run:
           name: install tar and gzip
           command: |
-            yum install -y tar gzip
+            yum install -y tar gzip git
+      - checkout
       - run:
           name: Ensure back-end infrastructure exists
           command: |
