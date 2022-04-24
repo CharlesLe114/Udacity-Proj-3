@@ -153,6 +153,9 @@ jobs:
       - image: amazon/aws-cli:2.5.2
     steps:
       # Checkout code from git
+      - run:
+          name: install git
+          command: apk add --update openssh-client git
       - checkout
       - run:
           name: install tar and gzip
