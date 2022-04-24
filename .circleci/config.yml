@@ -239,10 +239,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            pip install ansible
-            pip install tar 
-            pip install gzip
-            # apk add aws-cli
+            apt update
+            apt install ansible
+            apt install awscli
 
       - run:
           name: Configure server
