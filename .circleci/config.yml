@@ -239,9 +239,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yum add ansible
-            yum add tar 
-            yum add gzip
+            pip install ansible
+            pip install tar 
+            pip install gzip
             # apk add aws-cli
 
       - run:
