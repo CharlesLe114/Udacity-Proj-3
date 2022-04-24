@@ -405,9 +405,9 @@ workflows:
       #     filters:
       #       branches:
       #         only: [test-feature]
-      - get-ec2-info
-      - configure-infrastructure:
-          requires: [get-ec2-info]
+      # - get-ec2-info
+      # - configure-infrastructure:
+      #     requires: [get-ec2-info]
           # requires: [deploy-infrastructure]
       # - run-migrations:
       #     requires: [configure-infrastructure]
@@ -419,5 +419,5 @@ workflows:
       #     requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
       #     requires: [smoke-test]
-      # - cleanup
+      - cleanup
           # requires: [deploy-infrastructure]
