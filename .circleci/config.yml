@@ -239,9 +239,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apt update
-            apt install ansible
-            apt install awscli
+            sudo apt update
+            sudo apt install ansible
+            sudo apt install awscli
 
       - run:
           name: Configure server
