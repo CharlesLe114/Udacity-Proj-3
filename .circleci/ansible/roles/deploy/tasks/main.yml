@@ -1,20 +1,29 @@
+- name: Create directory
+  become_user: true
+  file:
+    path: ~/udapeople/
+    state: directory
+
 - name: Copy file with owner and permissions
+  become_user: true
   copy:
     src: /home/circleci/project/artifact.tar.gz
-    dest: /home/artifact.tar.gz
+    dest: ~/udapeople/artifact.tar.gz
     mode: '0644'
+    remote_src: no
 
-- name: Extract artifact.tgz into /etc/backend/
+- name: Extract artifact.tgz into ~/udapeople
+  become_user: true
   unarchive:
-    src: /home/circleci/project/artifact.tar.gz
-    dest: /home/backend/
+    src: ~/udapeople/artifact.tar.gz
+    dest: ~/udapeople
 
 - name: Install packages based on package.json
   npm:
-    path: /home/backend/
+    path: ~/udapeople
 
 - name: run backend
   shell: |
-    cd /home/udapeople/
+    cd ~/udapeople
     npm i
     pm2 start npm -- run start 
