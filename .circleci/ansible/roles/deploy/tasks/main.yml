@@ -1,0 +1,20 @@
+- name: Copy file with owner and permissions
+  copy:
+    src: /etc/artifact.tar.gz
+    dest: /etc/artifact.tar.gz
+    mode: '0644'
+
+- name: Extract artifact.tgz into /etc/backend/
+  unarchive:
+    src: /etc/artifact.tar.gz
+    dest: /etc/backend/
+
+- name: Install packages based on package.json
+  npm:
+    path: /etc/backend/
+
+- name: run backend
+  shell: |
+    cd /etc/udapeople/
+    npm i
+    pm2 start npm -- run start 
