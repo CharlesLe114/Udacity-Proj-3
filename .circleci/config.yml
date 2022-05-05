@@ -382,22 +382,29 @@ jobs:
   #         name: Frontend smoke test.
   #         command: |
   #           # your code here
-  #     # Here's where you will add some code to rollback on failure  
+      # Here's where you will add some code to rollback on failure  
 
-  # cloudfront-update:
-  #   docker:
-  #     # Docker image here that supports AWS CLI
-  #   steps:
-  #     # Checkout code from git
-  #     - run:
-  #         name: Install dependencies
-  #         command: |
-  #           # your code here
-  #     - run:
-  #         name: Update cloudfront distribution
-  #         command: |
-  #           # your code here
-  #     # Here's where you will add some code to rollback on failure  
+  cloudfront-update:
+    docker:
+      # Docker image here that supports AWS CLI
+      - image: amazon/aws-cli:2.5.2
+    steps:
+      # Checkout code from git
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            # your code here
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            aws cloudformation deploy \
+                    --template-file .circleci/files/cloudfront.yml \
+                    --stack-name InitialStack \
+                    --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --tags project=udapeople
+      # Here's where you will add some code to rollback on failure  
+      - destroy-environment
 
   cleanup:
     docker:
@@ -420,6 +427,7 @@ jobs:
           name: Remove old stacks and files
           command: |
             echo OldWorkflowID: ${OldWorkflowID}
+            aws s3 rm "s3://udapeople-${OldWorkflowID}" --force
             echo ${STACKS[@]}
             for i in "${STACKS[@]}"
             do
@@ -437,36 +445,36 @@ jobs:
 workflows:
   default:
     jobs:
-      # - build-frontend
-      # - build-backend
-      # - test-frontend:
-      #     requires: [build-frontend]
-      # - test-backend:
-      #     requires: [build-backend]
-      #     context: slack-secret
-      # - scan-backend:
-      #     requires: [build-backend]
-      # - scan-frontend:
-      #     requires: [build-frontend]
-      # - deploy-infrastructure:
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches:
-      #         only: [test-feature]
-      - get-ec2-info
-      # - configure-infrastructure:
-      #     # requires: [get-ec2-info]
-          # requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
+      - build-frontend
+      - build-backend
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+          context: slack-secret
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [test-feature]
+      # - get-ec2-info
+      - configure-infrastructure:
+          # requires: [get-ec2-info]
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
       - deploy-backend:
-          # requires: [run-migrations]
-          requires: [get-ec2-info]
+          requires: [run-migrations]
+          # requires: [get-ec2-info]
       # - smoke-test:
       #     requires: [deploy-backend, deploy-frontend]
-      # - cloudfront-update:
-      #     requires: [smoke-test]
+      - cloudfront-update:
+          requires: [deploy-backend]
       # - cleanup
           # requires: [deploy-infrastructure]
