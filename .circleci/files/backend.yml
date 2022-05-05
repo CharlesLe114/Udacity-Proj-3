@@ -35,9 +35,9 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub backend-${ID}
-Outputs:
-  WorkflowID:
-    Description: Workflow ID used for cloudformation deployment
-    Value: !Sub ${ID}
-    Export:
-      Name: WorkflowID
+# Outputs:
+#   WorkflowID:
+#     Description: Workflow ID used for cloudformation deployment
+#     Value: !Sub ${ID}
+#     Export:
+#       Name: WorkflowID
