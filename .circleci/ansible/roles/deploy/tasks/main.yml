@@ -1,20 +1,20 @@
 - name: Copy file with owner and permissions
   copy:
     src: /home/circleci/project/artifact.tar.gz
-    dest: /etc/artifact.tar.gz
+    dest: /home/artifact.tar.gz
     mode: '0644'
 
 - name: Extract artifact.tgz into /etc/backend/
   unarchive:
     src: /home/circleci/project/artifact.tar.gz
-    dest: /etc/backend/
+    dest: /home/backend/
 
 - name: Install packages based on package.json
   npm:
-    path: /etc/backend/
+    path: /home/backend/
 
 - name: run backend
   shell: |
-    cd /etc/udapeople/
+    cd /home/udapeople/
     npm i
     pm2 start npm -- run start 
