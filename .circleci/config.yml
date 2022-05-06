@@ -37,12 +37,12 @@ commands:
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             SUCCESS=$(curl --insecure  https://kvdb.io/UQBTfsvPJ29AES5NzGHg3t/migration_<< pipeline.parameters.workflow-id >>)
-            if(( $SUCCESS==1 )); 
-            then
-              cd ~/project/backend
-              npm install
-              npm run migration:revert
-            fi
+            if $SUCCESS==1 
+              then
+                cd ~/project/backend
+                npm install
+                npm run migration:revert
+              fi
 
 jobs:     
   build-frontend:
@@ -395,7 +395,7 @@ jobs:
             export BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
-            if curl "http://${API_URL}:3030/api/status"
+            if curl "http://${API_URL}/api/status"
               then
                 return 0
                 echo "Smoke Test Success"
