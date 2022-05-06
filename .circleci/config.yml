@@ -464,7 +464,7 @@ jobs:
           name: Remove old stacks and files
           command: |
             echo OldWorkflowID: ${OldWorkflowID}
-            aws s3 rm "s3://udapeople-${OldWorkflowID}" --force
+            aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
             echo ${STACKS[@]}
             for i in "${STACKS[@]}"
             do
