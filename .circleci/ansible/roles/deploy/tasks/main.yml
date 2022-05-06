@@ -1,11 +1,9 @@
 - name: Create directory
-  become_user: true
   file:
     path: ~/udapeople/
     state: directory
 
 - name: Copy file with owner and permissions
-  become_user: true
   copy:
     src: /home/circleci/project/artifact.tar.gz
     dest: ~/udapeople/artifact.tar.gz
@@ -13,10 +11,10 @@
     remote_src: no
 
 - name: Extract artifact.tgz into ~/udapeople
-  become_user: true
   unarchive:
     src: ~/udapeople/artifact.tar.gz
     dest: ~/udapeople
+    remote_src: yes
 
 - name: Install packages based on package.json
   npm:
