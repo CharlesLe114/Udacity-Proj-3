@@ -22,8 +22,7 @@
 - name: install nodejs and npm via apt
   apt: 
     # name: ['nodejs', 'npm']
-    name: 'nodejs'
-    version: 13.8.0
+    name: nodejs=13.8.0
 
 - name: install pm2 via npm
   npm:
