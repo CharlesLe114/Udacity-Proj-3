@@ -5,7 +5,7 @@
 
 - name: Copy file with owner and permissions
   copy:
-    src: /home/circleci/project/artifact.tar.gz
+    src: artifact.tar.gz
     dest: ~/udapeople/artifact.tar.gz
     mode: '0644'
     remote_src: no

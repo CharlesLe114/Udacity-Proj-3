@@ -360,13 +360,35 @@ jobs:
           name: Deploy backend
           command: |
             # your code here
+            echo ENVIROMENT=production >> "backend/.env"
+            echo TYPEORM_CONNECTION=postgres >> "backend/.env"
+            echo TYPEORM_MIGRATIONS_DIR=./migrations >> "backend/.env"
+            echo TYPEORM_ENTITIES=./modules/domain/**/*.entity.ts >> "backend/.env"
+            echo TYPEORM_MIGRATIONS=./migrations/*.ts >> "backend/.env"
+            echo TYPEORM_HOST=$TYPEORM_HOST >> "backend/.env"
+            echo TYPEORM_PORT=$TYPEORM_PORT >> "backend/.env"
+            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
+            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
+            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
             cd backend
             npm i
             npm run build
-            cd ..
+            npm run build
+            cp -rf node_modules ./dist/
+            echo ENVIROMENT=production >> ~/project/backend/dist/.env
+            echo TYPEORM_CONNECTION=postgres >> ~/project/backend/dist/.env
+            echo TYPEORM_MIGRATIONS_DIR=./migrations >> ~/project/backend/dist/.env
+            echo TYPEORM_ENTITIES=./modules/domain/**/*.entity.ts >> ~/project/backend/dist/.env
+            echo TYPEORM_MIGRATIONS=./migrations/*.ts >> ~/project/backend/dist/.env
+            echo TYPEORM_HOST=$TYPEORM_HOST >> ~/project/backend/dist/.env
+            echo TYPEORM_PORT=$TYPEORM_PORT >> ~/project/backend/dist/.env
+            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ~/project/backend/dist/.env
+            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ~/project/backend/dist/.env
+            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ~/project/backend/dist/.env
+            cat dist/.env
+            tar -czvf artifact.tar.gz ./dist/*
+            cp artifact.tar.gz ~/project/.circleci/ansible/roles/deploy/files/
             # Zip the directory
-            tar -C backend -czvf ./artifact.tar.gz .
-            pwd
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
@@ -482,36 +504,36 @@ jobs:
 workflows:
   default:
     jobs:
-      # - build-frontend
-      # - build-backend
-      # - test-frontend:
-      #     requires: [build-frontend]
-      # - test-backend:
-      #     requires: [build-backend]
-      #     context: slack-secret
-      # - scan-backend:
-      #     requires: [build-backend]
-      # - scan-frontend:
-      #     requires: [build-frontend]
-      # - deploy-infrastructure:
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches:
-      #         only: [test-feature]
-      # # - get-ec2-info
-      # - configure-infrastructure:
-      #     # requires: [get-ec2-info]
-      #     requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
-      # - deploy-backend:
-      #     requires: [run-migrations]
-      # # - smoke-test:
-      # #     requires: [deploy-backend, deploy-frontend]
-      # - cloudfront-update:
-      #     # requires: [smoke-test]
+      - build-frontend
+      - build-backend
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+          context: slack-secret
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [test-feature]
+      # - get-ec2-info
+      - configure-infrastructure:
+          # requires: [get-ec2-info]
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
+      # - smoke-test:
       #     requires: [deploy-backend, deploy-frontend]
-      - cleanup
+      - cloudfront-update:
+          # requires: [smoke-test]
+          requires: [deploy-backend, deploy-frontend]
+      # - cleanup
           # requires: [deploy-infrastructure]
