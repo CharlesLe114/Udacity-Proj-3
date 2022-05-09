@@ -376,20 +376,7 @@ jobs:
             cd backend
             npm i
             npm run build
-            npm run build
-            cp -rf node_modules ./dist/
-            echo ENVIROMENT=production >> ~/project/backend/dist/.env
-            echo TYPEORM_CONNECTION=postgres >> ~/project/backend/dist/.env
-            echo TYPEORM_MIGRATIONS_DIR=./migrations >> ~/project/backend/dist/.env
-            echo TYPEORM_ENTITIES=./modules/domain/**/*.entity.ts >> ~/project/backend/dist/.env
-            echo TYPEORM_MIGRATIONS=./migrations/*.ts >> ~/project/backend/dist/.env
-            echo TYPEORM_HOST=$TYPEORM_HOST >> ~/project/backend/dist/.env
-            echo TYPEORM_PORT=$TYPEORM_PORT >> ~/project/backend/dist/.env
-            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ~/project/backend/dist/.env
-            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ~/project/backend/dist/.env
-            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ~/project/backend/dist/.env
-            cat dist/.env
-            tar -czvf artifact.tar.gz ./dist/*
+            tar -czvf artifact.tar.gz .
             cp artifact.tar.gz ~/project/.circleci/ansible/roles/deploy/files/
             # Zip the directory
             cd ~/project/.circleci/ansible
