@@ -19,12 +19,12 @@
     repo: deb https://deb.nodesource.com/node_13.x {{ ansible_distribution_release }} main
     update_cache: yes
 
-# - name: install nodejs and npm via apt
-#   apt: 
-#     # name: ['nodejs', 'npm']
-#     name: nodejs=13.8.0
+- name: install nodejs and npm via apt
+  apt: 
+    # name: ['nodejs', 'npm']
+    name: nodejs
 
-# - name: install pm2 via npm
-#   npm:
-#     name: pm2
-#     global: yes
+- name: install pm2 via npm
+  npm:
+    name: pm2
+    global: yes
