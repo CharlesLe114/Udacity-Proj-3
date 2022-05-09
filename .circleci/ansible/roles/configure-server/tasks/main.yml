@@ -4,10 +4,10 @@
     name: python3
     state: present
 
-- name: Update all packages to their latest version
-  apt:
-    name: "*"
-    state: latest
+# - name: Update all packages to their latest version
+#   apt:
+#     name: "*"
+#     state: latest
 
 - name: Add nodejs apt key
   apt_key:
