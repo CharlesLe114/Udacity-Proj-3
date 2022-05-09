@@ -149,6 +149,9 @@ jobs:
           keys: [backend-build]
       # Your job code here
       - run:
+          name: check node version
+          command: node -v
+      - run:
           name: Back-end Scan
           command: |
             cd backend
