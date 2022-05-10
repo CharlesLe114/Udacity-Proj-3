@@ -23,6 +23,5 @@
 - name: run backend
   shell: |
     cd ~/udapeople
-    # npm i
-    # pm2 start npm -- run start 
-    pm2 start main.js
+    npm i
+    pm2 start npm -- run start 
