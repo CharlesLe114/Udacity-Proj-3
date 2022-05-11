@@ -18,10 +18,11 @@
 
 - name: Install packages based on package.json
   npm:
-    path: ~/udapeople
+    path: ~/udapeople/backend
 
 - name: run backend
   shell: |
-    cd ~/udapeople
+    cd ~/udapeople/backend
     npm i
+    npm run build
     pm2 start npm -- run start 
