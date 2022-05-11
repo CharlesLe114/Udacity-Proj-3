@@ -385,8 +385,8 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure  
-      # - destroy-environment
-      # - revert-migrations
+      - destroy-environment
+      - revert-migrations
 
   smoke-test:
     docker:
@@ -420,7 +420,7 @@ jobs:
           name: Frontend smoke test.
           command: |
             # your code here
-            URL="http://udapeople-<< pipeline.parameters.workflow-id >>.s3-website-eu-east-1.amazonaws.com/"
+            URL="http://udapeople-<< pipeline.parameters.workflow-id >>.s3-website-us-east-1.amazonaws.com/"
               echo $URL
               if curl -s ${URL} | grep "Welcome"
               then
@@ -430,8 +430,8 @@ jobs:
                 return 1
               fi
       # Here's where you will add some code to rollback on failure  
-      # - destroy-environment
-      # - revert-migrations
+      - destroy-environment
+      - revert-migrations
 
   cloudfront-update:
     docker:
@@ -528,5 +528,5 @@ workflows:
       - cloudfront-update:
           requires: [smoke-test]
           # requires: [deploy-backend, deploy-frontend]
-      # - cleanup
-          # requires: [deploy-infrastructure]
+      - cleanup:
+          requires: [cloudfront-update]
