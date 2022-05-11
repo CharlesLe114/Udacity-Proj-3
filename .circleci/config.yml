@@ -420,7 +420,7 @@ jobs:
           name: Frontend smoke test.
           command: |
             # your code here
-            URL="http://udapeople-<< pipeline.parameters.workflow-id >>.s3-website-us-east-1.amazonaws.com/"
+            URL="http://udapeople-<< pipeline.parameters.workflow-id >>.s3-website-eu-east-1.amazonaws.com/"
               echo $URL
               if curl -s ${URL} | grep "Welcome"
               then
