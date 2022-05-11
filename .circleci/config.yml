@@ -366,7 +366,7 @@ jobs:
             echo ENVIROMENT=production >> "backend/.env"
             echo TYPEORM_CONNECTION=postgres >> "backend/.env"
             echo TYPEORM_MIGRATIONS_DIR=./migrations >> "backend/.env"
-            echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
+            echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> "backend/.env"
             echo TYPEORM_MIGRATIONS=./migrations/*.ts >> "backend/.env"
             echo TYPEORM_HOST=$TYPEORM_HOST >> "backend/.env"
             echo TYPEORM_PORT=$TYPEORM_PORT >> "backend/.env"
@@ -430,8 +430,8 @@ jobs:
                 return 1
               fi
       # Here's where you will add some code to rollback on failure  
-      - destroy-environment
-      - revert-migrations
+      # - destroy-environment
+      # - revert-migrations
 
   cloudfront-update:
     docker:
@@ -524,7 +524,7 @@ workflows:
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
       - cloudfront-update:
-          # requires: [smoke-test]
-          requires: [deploy-backend, deploy-frontend]
+          requires: [smoke-test]
+          # requires: [deploy-backend, deploy-frontend]
       # - cleanup
           # requires: [deploy-infrastructure]
