@@ -1,0 +1,28 @@
+- name: Create directory
+  file:
+    path: ~/udapeople/
+    state: directory
+
+- name: Copy file with owner and permissions
+  copy:
+    src: artifact.tar.gz
+    dest: ~/udapeople/artifact.tar.gz
+    mode: '0644'
+    remote_src: no
+
+- name: Extract artifact.tgz into ~/udapeople
+  unarchive:
+    src: ~/udapeople/artifact.tar.gz
+    dest: ~/udapeople
+    remote_src: yes
+
+- name: Install packages based on package.json
+  npm:
+    path: ~/udapeople/backend
+
+- name: run backend
+  shell: |
+    cd ~/udapeople/backend
+    npm i
+    npm run build
+    pm2 start npm -- run start 
